@@ -197,7 +197,7 @@ button {
 
 @media (max-width:600px) {
     .info-box {
-        margin-left: 4px;
+        margin-left: 8px;
         width: 380px;
         margin-top: 120px;
         position: relative;
@@ -214,7 +214,7 @@ button {
 
     .support-button {
         margin-top: 70px;
-        margin-left: -170px;
+        margin-left: -160px;
         width: 315px;
     }
 
@@ -230,15 +230,17 @@ button {
         margin-left: 32%;
     }
 
+
+
     .info-p {
-        margin-left: -1%;
+        margin-left: 1%;
         font-size: 13px;
     }
 
     .warning-block {
-        margin-left: -37%;
+        margin-left: -35%;
         margin-top: 60px;
-        width: 360px;
+        width: 380px;
     }
 
     .logo {
