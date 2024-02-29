@@ -214,13 +214,13 @@ button {
 
     .support-button {
         margin-top: 70px;
-        margin-left: -175px;
-        width: 350px;
+        margin-left: -170px;
+        width: 315px;
     }
 
     #submitForm {
         margin-left: 30px;
-        width: 345px;
+        width: 315px;
         font-size: 30px;
 
     }
@@ -257,7 +257,7 @@ button {
     }
 
     .number-info {
-        width: 330px;
+        width: 300px;
         margin-left: 30px;
     }
 
@@ -270,7 +270,7 @@ button {
     }
 
     .amount-info {
-        width: 330px;
+        width: 300px;
         margin-left: 30px;
     }
 
@@ -279,7 +279,7 @@ button {
     }
 
     .bank-name {
-        width: 330px;
+        width: 300px;
         margin-left: 30px;
     }
 }

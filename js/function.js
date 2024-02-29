@@ -1,4 +1,5 @@
-  // сохранение билетов
+
+// сохранение билетов
   function saveTickets() {
     localStorage.setItem('tickets', JSON.stringify(selectedTickets));
   }
@@ -9,11 +10,17 @@
     return saved ? JSON.parse(saved) : [];
   }
 
+
+
+
+
+
   // обновление интерфейса
   function updateUI() {
     updateTotalPrice();
     updateTicketInfo();
     renderTickets(); 
+    validateForm();
   }
 document.addEventListener('DOMContentLoaded', function () {
     const ticketInfo = document.getElementById('aside-title-summary');
@@ -33,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.removeItem('totalPrice');
     });
 
+
+
     function updateTotalPrice() {
         const tickets = document.querySelectorAll('.list-group-item.GOOD, .list-group-item.SUPER.LUX');
         let total = 0;
@@ -50,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             selectedTickets.push(ticketInfo);
         });
-
+        totalPriceValue = total;
         totalPrice.innerText = total + ' ₽';
         saveTotalPriceToSessionStorage();
         localStorage.setItem('selectedTickets', JSON.stringify(selectedTickets));
@@ -58,6 +67,11 @@ document.addEventListener('DOMContentLoaded', function () {
         updateTicketInfo();
         updateEmptyState();
     }
+
+
+
+
+
 
     function updateEmptyState() {
         const tickets = document.querySelectorAll('.list-group-item.GOOD, .list-group-item.SUPER.LUX');
