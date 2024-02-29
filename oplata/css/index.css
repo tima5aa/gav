@@ -4053,3 +4053,9 @@ header {
 .payment-type:nth-child(2):hover img {
     display: none;
 }
+
+@media (max-width: 560px) {
+    .widget .container-header .header .nav-item {
+        font-size: 14px;
+    }
+}

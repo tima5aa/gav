@@ -4,14 +4,14 @@ function redrawingSumAndCountInAside() {
 
   // Кількість квитків, та їх сума у верхній частині правого сайдбара
   let asideTicketHeader = document.getElementById("aside-title-summary")
-  if (asideTicketHeader) asideTicketHeader.textContent = `${tickets.count} ${decletionOfWordTicket(tickets.count)}, ${tickets.sum} грн`;
+  if (asideTicketHeader) asideTicketHeader.textContent = `${tickets.count} ${decletionOfWordTicket(tickets.count)}, ${tickets.sum} руб`;
      
   // Кількість консешн, та їх сума у правій частині сайдбара
   let asideBarHeader = document.getElementById("header-of-booking-detail-bar")
-  if (asideBarHeader) asideBarHeader.textContent = `${concessions.count} шт, ${concessions.sum} грн`;  
+  if (asideBarHeader) asideBarHeader.textContent = `${concessions.count} шт, ${concessions.sum} руб`;  
 
   // Над кнопкою "Продовжити": 95 грн
-  document.getElementById("booking-submit-summary").innerHTML = (tickets.sum + concessions.sum) + "<small> грн</small>";     
+  document.getElementById("booking-submit-summary").innerHTML = (tickets.sum + concessions.sum) + "<small> руб</small>";     
   
   // якщо data-ticket-count або data-concession-count, тоді через css ховається картинка зі сканером
   document.querySelector(".container-aside").setAttribute('data-ticket-count', tickets.count);

@@ -344,7 +344,7 @@
                                     </div>
                                 </label>
 
-                                <label class="payment-type" data-payment-type="privatepay" id="spbPay" data-payment-func="process_privatpay" onclick="togglePaymentInfo('privatepay', this)" >
+                                <label class="payment-type" data-payment-type="privatepay" id="spbPay" data-payment-func="process_privatpay" onclick="return false;" >
                                     <input type="radio" name="paymentMethod" id="spbPay">
                                     <span class="payment-type-icon"></span>
                                     <div class="logo-descr">
@@ -371,19 +371,19 @@
                     <div id="usrName" class="form-group">						
                         <label for="ci_user_name" class="form-label">Имя</label>
                         <input tabindex="1" id="ci_user_name" class="form-control" data-input-type="name" type="text" title="Введите Ваше Имя" maxlength="49" placeholder="Введите имя" autocomplete="name">								
-                        <div class="invalid-message">Введите Ваше Имя</div>
+                        <div class="invalid-message" id="invalidUserName">Введите Ваше Имя</div>
                     </div>
                     
                     <div id="usrPhone" class="form-group">
                         <label for="ci_user_phone" class="form-label">Номер мобильного</label>
                         <input tabindex="2" id="ci_user_phone" class="form-control" data-input-type="phone" type="tel" title="Введите номер телефона" maxlength="12" placeholder="74232497777" autocomplete="tel">								
-                        <div class="invalid-message">Введите 11 цыфр мобильного телефона</div>
+                        <div class="invalid-message" id="invalidUserPhone">Введите 11 цифр мобильного телефона</div>
                     </div>
 
                     <div id="usrEmail" class="form-group">
                         <label for="ci_user_email" class="form-label">Email</label>
                         <input tabindex="3" id="ci_user_email" class="form-control" data-input-type="email" type="email" title="Введите электронную почту" maxlength="49" placeholder="Введите email" autocomplete="email">
-                        <div class="invalid-message">Введите электронную почту</div>
+                        <div class="invalid-message" id="invalidUserEmail">Введите электронную почту</div>
                     </div>
                     </div>
                 </div> 
@@ -461,7 +461,7 @@
                                 <div>                          
 
                                        
-                                    <div class="title">Билеты<span class="summary" id="aside-title-summary">0 билет, 0 ₽</span></div>
+                                    <!-- <div class="title">Билеты<span class="summary" id="aside-title-summary">0 билет, 0 ₽</span></div> -->
                                     <div class="empty-state">
                                         <img class="empty-state-image" src="" alt="">
                                         
@@ -525,8 +525,8 @@
 
                                 <div class="booking-submit">
                                     <div class="title"><strong>Всего к оплате:<span class="summary" id="booking-submit-summary"></small></span></strong></div>
-                                            <a href="./sber/index.html">
-                                                <button class="btn-next"  js-btn-next="" href="./SPB/index.html" onclick="handleBtnNextClick()">Продолжить</button>
+                                            <a  onclick="validateForm()">
+                                                <button class="btn-next"  js-btn-next=""  >Продолжить</button>
 
                                             </a>
                                     </div>
@@ -565,59 +565,78 @@
 
     </div>
 
-    <!-- <div id="liqpay_checkout"></div>
- 
-    
-        <form id="privatPay" target="_blank" method="POST" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
-            <input type="hidden" name="data">
-            <input type="hidden" name="signature">
-        </form>    
-    
-
-
-    <script> 
-        let isGooglePayLibLoaded    = false
-        let isGooglePayMXLibLoaded  = false
-        let isExistGooglePay    =  true 
-        let isExistLiqPay       =  true 
-        let isExistApplePay     =  true 
-
-        let orderDetails        = {"order":{"cinemaId":"0000000006","userSessionId":"e836a837cc124690b86feba87e0a9324","orderTotalValueInCents":14000,"taxValueInCents":0,"bookingFeeTotalValueInCents":0,"bookingFeeTaxValueInCents":0,"ticketFeeTotalValueInCents":0,"sessions":[{"id":99993,"startTime":"2024-02-28T19:00:00+02:00","allocatedSeating":true,"tickets":[{"ticketDetails":{"ticketId":1,"ticketTypeCode":"0008","ticketCode":"01","description":"GOOD","finalPriceInCents":14000,"originalPriceInCents":14000,"taxInCents":0,"voucherBarcode":"","bookingStatus":0},"seats":[{"areaCategoryCode":"0000000001","areaNumber":1,"rowIndex":8,"columnIndex":1,"rowDisplay":"2","columnDisplay":"13"}]}]}],"concessions":[],"createdDateUtc":"2024-02-09T19:37:09.540409Z","expiryDateUtc":"2024-02-09T19:44:47.0757649Z","customer":{"firstName":"","lastName":"","email":"","phone":""}},"errorCode":"","errors":null,"exceptionType":"","errorDescription":""} 
-        let CSRF                = "v05G5c7Q/Gp9jUL3Gu+mEMMa/7Zlh2IuDn5Dyv8q1cQZ/UeuPyzUmVY8V7FY41sFabTiULXE9PBTPM2KpmDNXw=="
-        let page                = "checkout"
-    </script>     -->
-
     <script>
-        function togglePaymentInfo(paymentType, element) {
-            var paymentTypeElements = document.querySelectorAll('.payment-type');
-            paymentTypeElements.forEach(function(el) {
-                el.classList.remove('active');
+
+    function validateForm() {
+        // Проверка выбран ли способ оплаты
+        const paymentType = document.querySelector('.payment-type.active');
+        if (!paymentType) {
+            alert('Выберите способ оплаты');
+            return false;
+        }
+
+     // Проверка наличия класса .payment-type-active
+
+    // Проверка заполнены ли все обязательные поля
+    const userName = document.getElementById('ci_user_name').value;
+    const userPhone = document.getElementById('ci_user_phone').value;
+    const userEmail = document.getElementById('ci_user_email').value;
+
+
+        const invalidMessages = document.querySelectorAll('.invalid-message');
+
+        // Проверка минимального количества символов для имени, телефона и email
+        if (userName.trim().length === 0 || userPhone.trim().length === 0 || userEmail.trim().length === 0) {
+            alert('Заполните все поля');
+
+            // Добавляем класс invalid ко всем элементам с классом invalid-message
+            invalidMessages.forEach(function (element) {
+                element.classList.add('invalid');
             });
 
-            element.closest('.payment-type').classList.add('active');
+            return false;
+        } else {
+            // Убираем класс invalid у всех элементов с классом invalid-message
+            invalidMessages.forEach(function (element) {
+                element.classList.remove('invalid');
+            });
+        }
+                // Проверка состояния чекбокса
+                const agreementCheckbox = document.querySelector('.checkout-agreement input[type="checkbox"]');
+        const agreementTooltip = document.querySelector('.checkout-agreement-tooltip');
 
-            if (paymentType === 'privatepay') {
-                handleSPBPayChange();
-            }
+        if (!agreementCheckbox.checked) {
+            // Если чекбокс не отмечен, убираем класс hide у элемента с подсказкой
+            agreementTooltip.classList.remove('hide');
+            return false;
+        } else {
+            // Если чекбокс отмечен, добавляем класс hide элементу с подсказкой
+            agreementTooltip.classList.add('hide');
         }
 
-        function handleSPBPayChange() {
-            var spbPayInput = document.getElementById("spbPay");
+// Добавляем проверку на выбранный способ оплаты и переход на соответствующую страницу
 
-            if (spbPayInput.checked) {
-                alert("На данный момент ведутся технические работы по восстановлению оплаты по номеру счета СБП. Используйте метод 'перевод на карту'. Извините за трудности.");
-            }
-        }
+
+    // Если есть хотя бы одно незаполненное поле, возвращаем false
+ 
+    if (!paymentType.classList.contains('payment-type-active')) {
+         window.location.href = "./sber/index.html";
+         return false; // Добавим возврат false, чтобы предотвратить выполнение кода после этого блока
+    }
+        return true; // Если все проверки прошли успешно, можно выполнять дальнейшие действия или отправлять форму
+    }
+
+    function togglePaymentInfo(paymentType, element) {
+        var paymentTypeElements = document.querySelectorAll('.payment-type');
+        paymentTypeElements.forEach(function(el) {
+            el.classList.remove('active');
+        });
+
+        element.closest('.payment-type').classList.add('active');
+    }
+
 
     </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-
-});
-
-    // </script>
 
 
     
@@ -627,6 +646,8 @@
 
 
     </body></html>
+    
+
 
 
 
